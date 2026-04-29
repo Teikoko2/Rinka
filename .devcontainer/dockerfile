@@ -1,0 +1,12 @@
+# 2026年現在、最も安定しているDebianベースのPythonイメージ
+FROM mcr.microsoft.com/devcontainers/python:3.11-bookworm
+
+# 必要なパッケージのインストール（OSレベル）
+RUN apt-get update && apt-get install -y \
+    curl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Pythonライブラリのインストール
+COPY requirements.txt /tmp/pip-tmp/
+RUN pip3 install --no-cache-dir -r /tmp/pip-tmp/requirements.txt \
+    && rm -rf /tmp/pip-tmp
